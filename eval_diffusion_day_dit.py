@@ -29,7 +29,7 @@ def parse_args_and_config():
                         help="Location to save restored images")
     parser.add_argument('--seed', default=61, type=int, metavar='N',
                         help='Seed for initializing training (default: 61)')
-    parser.add_argument('--sid', type=str, default='00199')
+    #parser.add_argument('--sid', type=str, default='00199')
     args = parser.parse_args()
     print(args)
 
@@ -78,7 +78,13 @@ def main():
     print("=> creating denoising-diffusion model with wrapper...")
     diffusion = DenoisingDiffusion(args, config)
     model = DiffusiveRestoration(diffusion, args, config)
-    model.restore(val_loader, validation=args.test_set, r=args.grid_r, sid = args.sid)
+    for i in range(1, 212):
+        sid_str = f"{i:05d}"  # 格式化为五位数字字符串
+        try:
+            print(f"Processing sid {sid_str} ...")
+            model.restore(val_loader, validation=args.test_set, r=args.grid_r, sid=sid_str)
+        except Exception as e:
+            print(f"Skipping sid {sid_str} due to error: {e}")
 
 
 if __name__ == '__main__':
