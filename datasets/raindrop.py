@@ -16,7 +16,7 @@ class RainDrop:
         self.transforms = torchvision.transforms.Compose([torchvision.transforms.ToTensor()])
 
         # 只针对"Sliced"目录下的子文件夹
-        sliced_dir = os.path.join(config.data.data_dir, "sliced")
+        sliced_dir = os.path.join(config.data.data_dir, "Sliced")
         if not os.path.exists(sliced_dir):
             raise ValueError(f"Sliced directory does not exist: {sliced_dir}")
         # 仅保留目录名称，不重复（排序后更好调试）
@@ -67,8 +67,8 @@ class RainDropDataset(torch.utils.data.Dataset):
         gt_names = []
         # filelist 中的每个元素都是"Sliced"下的子目录名，例如 "00001"
         for folder in filelist:
-            inpdir = os.path.join(self.dir, 'sliced', folder)
-            gtdir = os.path.join(self.dir, 'gt_sliced', folder)
+            inpdir = os.path.join(self.dir, 'Sliced', folder)
+            gtdir = os.path.join(self.dir, 'gt_Sliced', folder)
             if not os.path.exists(inpdir) or not os.path.exists(gtdir):
                 print(f"Skipping folder {folder} because required subdirectories do not exist")
                 continue
